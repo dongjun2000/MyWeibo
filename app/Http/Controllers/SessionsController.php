@@ -20,7 +20,7 @@ class SessionsController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            session()->flush('success', '欢迎回来！');
+            session()->flash('success', '欢迎回来！');
             return redirect()->route('users.show', [Auth::user()]);
         } else {
             session()->flash('danger', '很抱歉，您的邮箱或密码不正确');
