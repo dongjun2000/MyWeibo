@@ -9,6 +9,8 @@
         <h5>注册</h5>
       </div>
       <div class="card-body">
+        @include('shared._errors')
+
         <form action="{{ route('users.store') }}" method="post">
           @csrf
 
