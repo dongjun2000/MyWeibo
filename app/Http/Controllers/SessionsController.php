@@ -30,6 +30,7 @@ class SessionsController extends Controller
 
     public function destroy()
     {
-
+        Auth::logout();
+        return redirect('login')->with('success', '您已经成功退出！');
     }
 }
