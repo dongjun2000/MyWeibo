@@ -39,4 +39,26 @@ class UsersController extends Controller
             ->route('users.show', ['user' => $user])
             ->with('success', '欢迎，您将在这里开启一段新的旅程~');
     }
+
+    public function edit(User $user)
+    {
+        return view('users.edit', compact('user'));
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:50',
+            'password' => 'nullable|confirmed|min:6',
+        ]);
+
+        $data = [];
+        $data['name'] = $request->name;
+        if ($request->password) {
+            $data['password'] = $request->password;
+        }
+        $user->update($data);
+
+        return redirect()->route('users.show', $user)->with('success', '个人资料更新成功！');
+    }
 }
