@@ -4,7 +4,7 @@
 
     <ul class="navbar-nav justify-content-end">
       @if (Auth::check())
-        <li class="nav-item"><a class="nav-link" href="#">用户列表</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">用户列表</a></li>
         <li class="nav-item dropdown">
           <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
               data-bs-toggle="dropdown"
