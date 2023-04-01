@@ -15,11 +15,13 @@ class SessionsController extends Controller
         ]);
     }
 
+    // GET /login 用户登录页面
     public function create()
     {
         return view('sessions.create');
     }
 
+    // POST /login 用户登录操作
     public function store(Request $request)
     {
         $credentials = $this->validate($request, [
@@ -28,9 +30,17 @@ class SessionsController extends Controller
         ]);
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
-            session()->flash('success', '欢迎回来！');
-            $fallback = route('users.show', Auth::user());
-            return redirect()->intended($fallback);
+            // 判断用户是否已激活
+            if (Auth::user()->activated) {
+                session()->flash('success', '欢迎回来！');
+                $fallback = route('users.show', Auth::user());
+                return redirect()->intended($fallback);
+            } else {
+                // 未激活，退出登录
+                Auth::logout();
+                session()->flash('warning', '你的账号未激活，请检查邮箱中的注册邮件进行激活。');
+                return redirect('/');
+            }
         } else {
             session()->flash('danger', '很抱歉，您的邮箱或密码不正确');
             return redirect()->back()->withInput();
