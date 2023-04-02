@@ -20,7 +20,7 @@
 
           <div class="mb-3{{ $errors->has('email') ? ' has-error ' : '' }}">
             <label for="email" class="form-control-label">邮箱地址：</label>
-            <input type="email" id="email" class="form-control" name="email" value="{{ old('email') }}" required>
+            <input type="email" id="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
 
             @if ($errors->has('email'))
               <span class="form-text text-danger">
