@@ -15,8 +15,14 @@ class UsersController extends Controller
             'except' => ['create', 'store', 'show', 'index', 'confirmEmail']
         ]);
 
+        // 只有未登录用户才能访问注册页面
         $this->middleware('guest', [
             'only' => ['create']
+        ]);
+
+        // 限流：一个小时内只能提交10次请求
+        $this->middleware('throttle:10,60', [
+            'only' => ['store']
         ]);
     }
 

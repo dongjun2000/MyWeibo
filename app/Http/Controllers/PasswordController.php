@@ -13,6 +13,14 @@ use Carbon\Carbon;
 
 class PasswordController extends Controller
 {
+    public function __construct()
+    {
+        // 限流：发送密码重置邮件，10分钟内只能尝试3次
+        $this->middleware('throttle:3,10', [
+            'only' => ['sendResetLinkEmail']
+        ]);
+    }
+
     // GET /password/reset 找回密码页面
     public function showLinkRequestForm()
     {
@@ -68,6 +76,7 @@ class PasswordController extends Controller
         return view('auth.passwords.reset', compact('token'));
     }
 
+    // POST /password/reset 重置用户密码操作
     public function reset(Request $request)
     {
         // 1.表单验证
