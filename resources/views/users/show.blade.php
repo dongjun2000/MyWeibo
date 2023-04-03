@@ -19,7 +19,7 @@
                 @endforeach
               </ul>
               <div class="mt-5">
-                {{!! $statuses->render() !!}}
+                {!! $statuses->render() !!}
               </div>
             @else
               <p>没有数据！</p>
