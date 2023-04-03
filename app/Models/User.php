@@ -55,15 +55,21 @@ class User extends Authenticatable
         });
     }
 
+    // 模型关联关系：一个用户拥有多条微博
+    public function statuses()
+    {
+        return $this->hasMany(Status::class);
+    }
+
+    // 获取用户头像
     public function gravatar($size = '100')
     {
         $hash = md5(strtolower(trim($this->attributes['email'])));
         return "https://cdn.v2ex.com/gravatar/$hash?s=$size";
     }
 
-    // 模型关联关系：一个用户拥有多条微博
-    public function statuses()
+    public function feed()
     {
-        return $this->hasMany(Status::class);
+        return $this->statuses()->orderBy('created_at', 'desc');
     }
 }
