@@ -12,7 +12,7 @@
     </div>
 
     <div class="mt-3">
-      {{ $users->render() }}
+      {!! $users->render() !!}
     </div>
   </div>
 @stop
