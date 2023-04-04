@@ -12,6 +12,7 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth', [
+            // 定义不需要登录的方法
             'except' => ['create', 'store', 'show', 'index', 'confirmEmail']
         ]);
 
@@ -44,6 +45,22 @@ class UsersController extends Controller
     {
         $statuses = $user->statuses()->orderBy('created_at', 'desc')->paginate(30);
         return view('users.show', compact('user', 'statuses'));
+    }
+
+    // 我的关注列表
+    public function followings(User $user)
+    {
+        $users = $user->followings()->paginate(30);
+        $title = $user->name . '关注的人';
+        return view('users.show_follow', compact('users', 'title'));
+    }
+
+    // 我的粉丝列表
+    public function followers(User $user)
+    {
+        $users = $user->followers()->paginate(30);
+        $title = $user->name . '的粉丝';
+        return view('users.show_follow', compact('users', 'title'));
     }
 
     // POST /users 注册用户操作
