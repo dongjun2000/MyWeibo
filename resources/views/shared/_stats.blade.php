@@ -1,6 +1,6 @@
 <a href="{{ route('users.followings', $user) }}">
   <strong id="following" class="stat">
-    {{ count($user->followers) }}
+    {{ count($user->followings) }}
   </strong>
   关注
 </a>
